@@ -1,6 +1,8 @@
 import app from "./server.js";
 import mongodb from "mongodb";
 import dotenv from "dotenv";
+import BBTSquareDAO from './dao/bbtsquareDAO.js'
+import ReviewsDAO from "./dao/reviewsDAO.js";
 dotenv.config();
 
 const MongoClient = mongodb.MongoClient;
@@ -18,6 +20,8 @@ MongoClient.connect(process.env.BBTSQUARE_DB_URI,
         process.exit(1)
     })
     .then(async client => {
+        await BBTSquareDAO.injectDB(client)
+        await ReviewsDAO.injectDB(client)
         app.listen(port, () => {
             console.log('listening on port ' + port)
         })
