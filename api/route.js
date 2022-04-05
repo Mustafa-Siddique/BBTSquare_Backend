@@ -5,6 +5,8 @@ import ReviewsCtrl from './reviews.controller.js'
 const router = express.Router()
 
 router.route('/').get(BBTSquareCtrl.apiGetData)
+router.route("/id/:id").get(BBTSquareCtrl.apiGetDataById)
+router.route("/cuisines").get(BBTSquareCtrl.apiGetDataCuisines)
 
 router
     .route("/review")

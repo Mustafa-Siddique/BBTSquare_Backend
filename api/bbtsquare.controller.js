@@ -29,4 +29,28 @@ export default class BBTSquareCtrl {
         }
         res.json(response)
     }
+
+    static async apiGetDataById(res, req, next) {
+        try {
+            let id = req.params.id || {}
+            let restaurant = await BBTSquareDAO.getRestaurantById(id)
+            if (!restaurant) {
+                res.status(404).json({error: "Not Found"})
+            }
+            res.json(restaurant)
+        } catch (error) {
+            console.log(`api, ${error}`)
+            res.status(500).json({error: error})
+        }
+    }
+
+    static async apiGetDataCuisines(res, req, next) {
+        try {
+            let cuisines = await BBTSquareDAO.getCuisines()
+            res.json(cuisines)
+        } catch (error) {
+            console.log(`api, ${error}`)
+            res.status(500).json({error: error})
+        }
+    }
 }
