@@ -82,19 +82,20 @@ export default class BBTSquareDAO {
                                         date: -1,
                                     },
                                 },
-                                {
-                                    $addFields: {
-                                        reviews: "$reviews",
-                                    },
-                                },
-                            ]
-                        }
-                    }
+                            ],
+                            as: "reviews",
+                        },
+                    },
+                    {
+                        $addFields: {
+                            reviews: "$reviews",
+                        },
+                    },
                 ]
                 return await restaurants.aggregate(pipeline).next()
         } catch (error) {
             console.error(`Something went wrong in getRestaurantByID: ${error}`)
-            throw error
+            return {error: error}
         }
     }
 
@@ -105,7 +106,7 @@ export default class BBTSquareDAO {
             return cuisines
         } catch (error) {
             console.error(`Unable to get cuisines, ${error}`)
-            return cuisines
+            return {error: error}
         }
     }
 }
